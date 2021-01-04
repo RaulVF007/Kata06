@@ -29,11 +29,17 @@ public class BlockPanel extends JPanel implements BlockDisplay {
     @Override
     public void display(Block block) {
         this.block = block;
+        this.block.register(this);
         repaint();
     }
 
     @Override
     public Block block() {
         return block;
+    }
+
+    @Override
+    public void changed() {
+        repaint();
     }
 }
