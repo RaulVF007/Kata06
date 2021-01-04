@@ -1,19 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Kata06.apps.swing;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
+import Kata06.view.BlockDisplay;
+import Kata06.model.Block;
 
-/**
- *
- * @author Raul Vega
- */
-public class BlockPanel extends JPanel{
+public class BlockPanel extends JPanel implements BlockDisplay {
+    private Block block;
+    private static final int SIZE = 100;
     
     @Override
     public void paint(Graphics g) {
@@ -21,11 +16,24 @@ public class BlockPanel extends JPanel{
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
         
         g.setColor(Color.black);
-        for (int i = 0; i <= 700; i+=100) {
-            g.drawLine(0, i, 700, i);
-            g.drawLine(i, 0, i, 700);
+        int size = Block.MAX * SIZE;
+        for (int i = 0; i <= size; i+=SIZE) {
+            g.drawLine(0, i, size, i);
+            g.drawLine(i, 0, i, size);
         }
+        if (block==null) return;
         g.setColor(Color.red);
-        g.fillRect(300, 300, 100, 100);
+        g.fillRect((block.x()-1)*SIZE, (Block.MAX-block.y())*SIZE, SIZE, SIZE);
+    }
+
+    @Override
+    public void display(Block block) {
+        this.block = block;
+        repaint();
+    }
+
+    @Override
+    public Block block() {
+        return block;
     }
 }
